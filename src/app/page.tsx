@@ -7,21 +7,27 @@ import Link from "next/link";
 
 export default function Home() {  
   const [currentIndex, setCurrentIndex] = useState(1);
-  const timeSteps = [4, 7, 3]; // 각 단계별 시간
-  const [stepIndex, setStepIndex] = useState(0); // 현재 단계 인덱스
-  const [timeLeft, setTimeLeft] = useState(timeSteps[0]); // 현재 단계 남은 시간
+  const timeSteps = [4, 7, 8];
+  const texts = [
+    "코로 4초 동안 깊게 숨을 들이마십니다.",
+    "호흡을 멈추고 7초 동안 참습니다.",
+    "입을 통해 8초 동안 천천히 숨을 내쉽니다.",
+  ];
+  const [stepIndex, setStepIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(timeSteps[0]);
 
   useEffect(() => {
     if (timeLeft === 0) {
       if (stepIndex < timeSteps.length - 1) {
-        setStepIndex(stepIndex + 1); // 다음 섹션으로 이동
-        setTimeLeft(timeSteps[stepIndex + 1]); // 다음 섹션의 시간 설정
+        setStepIndex(stepIndex + 1);
+        setTimeLeft(timeSteps[stepIndex + 1]);
       }
       return;
     }
     const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
     return () => clearTimeout(timer);
   }, [timeLeft, stepIndex]);
+
 
 
   const nextSlide = () => {
@@ -342,7 +348,7 @@ export default function Home() {
                     <div className="seconds">{timeLeft}<span>s</span></div>
                   </div>
                   <div className="timer_text_wrap">
-                    <p>코로 4초 동안 깊게 숨을 들이마십니다.</p>
+                    <p>{texts[stepIndex]}</p>
                   </div>    
                 </li>
               </ul>
